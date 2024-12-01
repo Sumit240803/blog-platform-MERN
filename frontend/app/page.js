@@ -11,13 +11,12 @@ export default function Home() {
         <div className="w-3/4 m-auto">
 
         <h1 className="">Welcome to the community of</h1>
-        <h1 className="font-bold uppercase pb-10"> world class bloggers</h1>
-        <h1>Make blogs , share knowledge , help people and share your thoughts</h1>
+        <h1 className="font-bold uppercase  relative inline-block px-4 after:content-[''] after:absolute after:left-1/2 after:translate-x-[-50%] after:bottom-0 after:w-0 after:h-[2px] after:bg-blue-700 after:opacity-0 after:transition-all after:duration-300 hover:after:w-[80%] hover:after:opacity-100 "> world class bloggers</h1>
+        <h1 className="mt-10">Make blogs , share knowledge , help people and share your thoughts</h1>
         </div>
         </div>
         <div className="w-1/2">
         <Register/>
-        
          </div>
       </div>
     </div>
