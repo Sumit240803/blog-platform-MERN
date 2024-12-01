@@ -9,7 +9,7 @@ const router = express.Router();
 router.post('/post',verifyJwt ,async (req, res) => {
     try {
        
-      const { title, content, authorName, authorEmail, tags, isPublished } = req.body;
+      const { title, content, authorName, authorEmail, tags, isPublished,category } = req.body;
   
       // Validate required fields
       if (!title || !content || !authorName || !authorEmail) {
@@ -24,6 +24,7 @@ router.post('/post',verifyJwt ,async (req, res) => {
         authorEmail,
         tags,
         isPublished,
+        category
       });
   
       // Save the blog to the database
