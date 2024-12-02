@@ -5,6 +5,7 @@ import { generateToken } from '../utils/jwtUtil.js';
 import genOtp from '../utils/genOtp.js';
 import sendMail from '../utils/emailService.js';
 import verifyOtp from '../utils/verifyOtp.js';
+import OTP from '../models/Otp.js';
 const router = express.Router();
 
 // Example route for user registration
@@ -76,6 +77,7 @@ router.post("/verify" , async(req,res)=>{
     const user = await User.findOne({email : email});
     if(verifyOtp(email , otp)){
       const token = generateToken(user);
+      await OTP.deleteOne({email : email});
       res.status(200).json({token : token});
     }else{
       res.status(201).json({message : "Invalid Otp"});

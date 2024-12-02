@@ -1,5 +1,6 @@
 import Navbar from "./components/Navbar";
 import Register from "./components/Register";
+import SwitchButton from "./components/Switch";
 
 
 export default function Home() {
@@ -16,7 +17,8 @@ export default function Home() {
         </div>
         </div>
         <div className="w-1/2">
-        <Register/>
+        
+        <SwitchButton/>
          </div>
       </div>
     </div>

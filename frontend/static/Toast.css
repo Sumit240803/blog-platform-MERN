@@ -1,0 +1,10 @@
+/* Add custom styling for ToastContainer */
+.toast-container {
+    position: absolute;
+    bottom: 0; /* Position it at the bottom */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    z-index: 9999; /* Ensure the toast is above other elements */
+    margin-bottom: 20px; /* Space below the toast */
+  }
+  
