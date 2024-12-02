@@ -20,9 +20,7 @@ const UserNav = () => {
                     <button className='mx-0' onClick={handleMenu}>
                         Close
                     </button>
-                    <div className="font-bold">
-                        Username
-                    </div>
+                    
                     <div>
                         Publish Blog
                     </div>

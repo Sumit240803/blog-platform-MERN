@@ -28,7 +28,7 @@ const Register = () => {
     // You can add logic to send formData to your backend API here
     console.log("Form Submitted", formData);
     try {
-      const response = await fetch(`https://blog-platform-mern.onrender.com/api/auth/register`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
