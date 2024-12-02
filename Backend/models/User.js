@@ -29,7 +29,20 @@ const userSchema = new mongoose.Schema(
         title : {type : String},
         views : {type : Number}
       }
-    ]
+    ],
+    followers : [
+      {
+        userId : {type : String}
+      }
+    ],
+    following : [
+      {
+        userId : {type : String}
+      }
+    ],
+    bio : {
+      type : String
+    }
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields

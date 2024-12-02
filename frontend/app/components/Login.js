@@ -1,8 +1,10 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Login = () => {
+  const router = useRouter();
     const [logged , setLogged] = useState(false);
     const [sent , setSent] = useState(false);
     const[error , setError] = useState(false);
@@ -25,10 +27,10 @@ const Login = () => {
     }));
   };
   const getOtp = async()=>{
-   /* setSent(true);
+    setSent(true);
     setTimeout(()=>{
         setSent(false)
-    },2000);*/
+    },2000);
     if(formData.email!==''){
         setError(false);
         const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/sendOtp`,{
@@ -48,6 +50,12 @@ const Login = () => {
 
   // Handle form submission
   const handleSubmit = async(e) => {
+
+
+    //OTP verification
+
+
+
     e.preventDefault();
     if (isOtpLogin) {
       console.log("OTP Login Data", { email: formData.email, otp: formData.otp });
@@ -65,8 +73,15 @@ const Login = () => {
         };
         setLogged(true);
         setFormData({email : '' , password : '' , otp : ''});
+        router.replace("/pages/home")
       }
       
+
+      //Password Authentication
+
+
+
+
     } else {
       console.log("Password Login Data", {
         email: formData.email,
@@ -89,9 +104,12 @@ const Login = () => {
             setLogged(false)
         },2000);
         setFormData({email : '' , password : '' , otp : ''});
+        router.replace("/pages/home")
       }
     }
   };
+
+
 
   return (
     <div className="p-6 w-full max-w-sm mx-auto">
