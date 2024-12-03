@@ -6,7 +6,7 @@ const MyBlogs = () => {
     const [blogData , setBlogData] = useState([]);
     const token = getToken();
     const myBlogs = async()=>{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/myBlogs`,{
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/published`,{
             method : "GET",
             headers : {
                 "Authorization" : `Bearer ${token}`
@@ -15,8 +15,8 @@ const MyBlogs = () => {
         if(response.ok){
 
             const data = await response.json();
-            setBlogData(data.user.blogs);
-            console.log(blogData);
+            setBlogData(data.drafts);
+            console.log(data);
         }
     }
     useEffect(()=>{

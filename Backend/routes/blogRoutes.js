@@ -4,6 +4,7 @@ import verifyJwt from "../utils/isLogged.js";
 import User from "../models/User.js";
 import getTokenFromHeader from "../utils/getToken.js";
 import getUser from "../utils/getLoggedUser.js";
+import Category from "../models/Categories.js";
 const router = express.Router();
 
 router.post('/post',verifyJwt ,async (req, res) => {
@@ -123,4 +124,48 @@ router.patch("/edit/:id" , verifyJwt , async(req,res)=>{
     }
 })
 
+router.post('/categories', async (req, res) => {
+    try {
+      const { category, tags } = req.body;
+  
+      // Validation
+      if (!category) {
+        return res.status(400).json({ message: 'Category is required' });
+      }
+  
+      // Create and save the category
+      const newCategory = new Category({
+        category,
+        tags,
+      });
+  
+      const savedCategory = await newCategory.save();
+  
+      res.status(201).json({
+        message: 'Category created successfully',
+        data: savedCategory,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: 'Error creating category',
+        error: error.message,
+      });
+    }
+  });
+
+
+router.get('/categories', async (req, res) => {
+    try {
+      const categories = await Category.find(); // Fetch all categories from the database
+      res.status(200).json({
+        message: 'Categories retrieved successfully',
+        data: categories,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: 'Error retrieving categories',
+        error: error.message,
+      });
+    }
+});
 export default router;

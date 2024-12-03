@@ -8,7 +8,8 @@ import React, { useEffect } from "react";
 
 const Home = () => {
   const router = useRouter();
-
+  const username = "abc";
+  const email = "goyalsumit651@gmail.com";
   useEffect(() => {
     if (!checkToken()) {
       router.replace("/");
@@ -19,7 +20,7 @@ const Home = () => {
     <div className="min-h-screen flex bg-black text-white">
       {/* Side Navigation */}
       <div className=" flex-shrink-0">
-        <UserNav />
+        <UserNav username={username} email={email} />
       </div>
 
       {/* Main Content */}

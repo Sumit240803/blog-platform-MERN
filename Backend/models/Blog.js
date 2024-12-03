@@ -21,13 +21,6 @@ const blogSchema = new mongoose.Schema({
     trim: true,
     match: [/.+@.+\..+/, 'Please provide a valid email address'],
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  updatedAt: {
-    type: Date,
-  },
   tags: {
     type: [String],
     default: [],
@@ -41,7 +34,7 @@ const blogSchema = new mongoose.Schema({
     default: 0,
   },
   category :{
-    type : String
+    type : [String]
   },
   comments: [
     {
@@ -59,6 +52,8 @@ const blogSchema = new mongoose.Schema({
       },
     },
   ],
+},{
+  timestamps : true
 });
 
 blogSchema.pre('save', function (next) {
