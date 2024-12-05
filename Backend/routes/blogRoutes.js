@@ -7,6 +7,7 @@ import getUser from "../utils/getLoggedUser.js";
 import Category from "../models/Categories.js";
 const router = express.Router();
 
+//Route tested
 router.post('/post',verifyJwt ,async (req, res) => {
     try {
        
@@ -31,22 +32,64 @@ router.post('/post',verifyJwt ,async (req, res) => {
       // Save the blog to the database
       const savedBlog = await newBlog.save();
       const user = await User.findOne({ email : authorEmail});
-      if(user){
-        user.blogs.push({
-            blogId : savedBlog._id.toString(),
-            title : savedBlog.title,
-            views : 0
-        })
+      if(isPublished && user){
+        user.published.push({blogId : savedBlog._id.toString(), title : savedBlog.title});
       }else{
-        return res.status(404).json({message : "User must be registered to post the blog"})
+        user.drafts.push({blogId : savedBlog._id.toString(),title : savedBlog.title});
       }
+      
       await user.save();
       res.status(201).json({ message: 'Blog created successfully!', blog: savedBlog });
     } catch (error) {
       res.status(500).json({ message: 'An error occurred while creating the blog.', error: error.message });
     }
   });
-router.delete("/delete/:id" , verifyJwt , async(req,res)=>{
+
+  //Route tested
+  router.post("/publishDraft", verifyJwt, async (req, res) => {
+    try {
+      const { id } = req.body;
+      
+      const token = getTokenFromHeader(req);
+      const user = getUser(token);
+      
+      // Find the author (user)
+      const author = await User.findOne({ email: user.email });
+      
+      if (!author) {
+        return res.status(404).json({ message: "Author not found" });
+      }
+  
+      // Find the blog by id
+      const blog = await Blog.findById(id);
+      
+      if (!blog) {
+        return res.status(404).json({ message: "Blog not found" });
+      }
+  
+      // Mark the blog as published
+      blog.isPublished = true;
+      author.published.addToSet({blogId : id , title : blog.title });
+      // Remove the blog from the author's drafts
+      const draftIndex = author.drafts.findIndex(draft => draft.blogId.toString() === id);
+      if (draftIndex !== -1) {
+        author.drafts.pull(author.drafts[draftIndex]._id); // Remove the draft from drafts array
+      }
+  
+      // Save both the blog and author
+      await blog.save();
+      await author.save();
+  
+      // Respond with a success message
+      res.status(200).json({ message: "Draft published successfully" });
+  
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error", error: error.message });
+    }
+  });
+  
+/*router.delete("/delete/:id" , verifyJwt , async(req,res)=>{
     try {
         const id = req.params.id;
         const token = getTokenFromHeader(req);
@@ -70,7 +113,52 @@ router.delete("/delete/:id" , verifyJwt , async(req,res)=>{
         console.error(error);
         return res.status(500).json({ message: "Server error." });
     }
-})
+})*/
+
+
+//Route tested
+router.delete("/deleteDraft/:id", verifyJwt, async (req, res) => {
+  try {
+    const id = req.params.id; // The blogId of the draft to delete
+
+    // Get the token and user details
+    const token = getTokenFromHeader(req);
+    const user = getUser(token);
+
+    // Find the author by email
+    const author = await User.findOne({ email: user.email });
+    if (!author) {
+      return res.status(404).json({ message: "Author not found" });
+    }
+
+    // Find the blog by ID
+    const blog = await Blog.findById(id);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    // Check if the blog is in the author's drafts
+    const draftIndex = author.drafts.findIndex(draft => draft.blogId.toString() === id);
+    if (draftIndex !== -1) {
+      // Remove the draft from the author's drafts
+      author.drafts.pull(author.drafts[draftIndex]._id);
+      await author.save();
+    }
+
+    // Delete the blog from the database
+    await Blog.findByIdAndDelete(id);
+
+    // Respond with success
+    res.status(200).json({ message: "Draft deleted successfully" });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Internal server error", error: error.message });
+  }
+});
+
+
+
 
 router.get("/tags" , async(req,res)=>{
     try {
@@ -107,7 +195,7 @@ router.get("/all" , async(req,res)=>{
         return res.status(500).json({ message: "Server error." });
     }
 })
-
+/*
 router.patch("/edit/:id" , verifyJwt , async(req,res)=>{
     try {
         const blogId =  req.params.id;
@@ -123,7 +211,7 @@ router.patch("/edit/:id" , verifyJwt , async(req,res)=>{
         return res.status(500).json({ message: 'Error updating blog', error });
     }
 })
-
+*/
 router.post('/categories', async (req, res) => {
     try {
       const { category, tags } = req.body;

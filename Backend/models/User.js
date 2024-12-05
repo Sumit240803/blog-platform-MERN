@@ -22,12 +22,17 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       
-    },
-    blogs : [
+    }, 
+    published :[
       {
         blogId : {type : String},
-        title : {type : String},
-        views : {type : Number}
+        title : {type :String}
+      }
+    ],
+    drafts : [
+      {
+        blogId : {type : String},
+        title : {type : String}
       }
     ],
     followers : [
