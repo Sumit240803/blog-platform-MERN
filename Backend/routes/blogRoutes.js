@@ -159,14 +159,14 @@ router.delete("/deleteDraft/:id", verifyJwt, async (req, res) => {
 
 
 
-
+//Tested
 router.get("/tags" , async(req,res)=>{
     try {
         const {tags} = req.query;
         const tagArray = tags.split(",");
         const blogs = await Blog.find({tags : {$in : tagArray}}).sort({updatedAt : -1});
         if(blogs.length > 0){
-            return res.status(200).json(blogs);
+            return res.status(200).json({blogs : blogs , found : blogs.length});
         }else {
             return res.status(404).json({ message: "No blogs found with the specified tags." });
         }
@@ -175,7 +175,7 @@ router.get("/tags" , async(req,res)=>{
         return res.status(500).json({ message: "Server error." });
     }
 })
-
+//Tested
 router.get("/all" , async(req,res)=>{
     try {
         const {page = 1 , size = 10} = req.query;
@@ -212,6 +212,7 @@ router.patch("/edit/:id" , verifyJwt , async(req,res)=>{
     }
 })
 */
+//Tested
 router.post('/categories', async (req, res) => {
     try {
       const { category, tags } = req.body;
@@ -241,7 +242,7 @@ router.post('/categories', async (req, res) => {
     }
   });
 
-
+//Tested
 router.get('/categories', async (req, res) => {
     try {
       const categories = await Category.find(); // Fetch all categories from the database

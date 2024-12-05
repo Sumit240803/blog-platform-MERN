@@ -1,13 +1,12 @@
 "use client"
-import UserNav from '@/app/components/UserNav';
 import getToken from '@/app/utils/getToken'
 import React, { useEffect, useState } from 'react'
 
-const MyBlogs = () => {
+const Drafts = () => {
     const [blogData , setBlogData] = useState([]);
     const token = getToken();
     const myBlogs = async()=>{
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/published`,{
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/drafts`,{
             method : "GET",
             headers : {
                 "Authorization" : `Bearer ${token}`
@@ -17,24 +16,22 @@ const MyBlogs = () => {
 
             const data = await response.json();
             setBlogData(data.drafts);
-            console.log(data);
+            console.log(data.drafts);
         }
     }
     useEffect(()=>{
         myBlogs()
     },[]);
   return (
-    <div className='flex'>
-        <UserNav/>
-        <div className=''>
-
+    <div>
         MyBlogs
-        {blogData.length >0 ? <div>
-           
-        </div> : "No blogs right now."}
-        </div>
+        {blogData.length >0 ? blogData.map((blog)=>(
+            <div key={blog._id}>
+                {blog.title}
+            </div>
+        )) : "No blogs right now."}
     </div>
   )
 }
 
-export default MyBlogs
+export default Drafts
