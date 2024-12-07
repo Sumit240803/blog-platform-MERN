@@ -12,7 +12,7 @@ router.get("/userInfo" , verifyJwt , async(req , res)=>{
         const decoded = getUser(token);
         const user = await User.findOne({email : decoded.email}).select(["-password" , "-blogs","-createdAt" , "-updatedAt"]);
         if(user){
-            res.status(201).json({username : user.username , email : user.email , followers : user.followers.length , following : user.following.length , totalDrafts : user.drafts.length , blogsPublished : user.published.length });
+            res.status(201).json({username : user.username , email : user.email , followers : user.followers.length , following : user.following.length , totalDrafts : user.drafts.length , blogsPublished : user.published.length, revenue : user.revenue,bio : user.bio });
         }
         
     }

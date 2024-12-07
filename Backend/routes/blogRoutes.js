@@ -257,4 +257,31 @@ router.get('/categories', async (req, res) => {
       });
     }
 });
+
+router.get("/id",async(req,res)=>{
+  try {
+    const {id} = req.query;
+    const blog = await Blog.findById(id);
+    if(blog){
+      res.status(200).json({blog : blog});
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error retrieving blog',
+      error: error.message,
+    });
+  }
+})
+
+router.get("/title" , async(req,res)=>{
+  try {
+    const {title} = req.query;
+    const blog = await Blog.findOne({title : title});
+    if(blog){
+      res.status(200).json({blog : blog});
+    }
+  } catch (error) {
+    
+  }
+})
 export default router;

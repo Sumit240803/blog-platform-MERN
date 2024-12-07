@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import TinyMCEEditor from '@/app/components/TinyMCEEditor';
 import getToken from '@/app/utils/getToken';
 import { useRouter, useSearchParams } from 'next/navigation';
+import UserNav from '@/app/components/UserNav';
+import checkToken from '@/app/utils/checkToken';
 
 
 const Publish = () => {
@@ -18,6 +20,7 @@ const Publish = () => {
   const [selected, setSelected] = useState([]);
   const [tags, setTags] = useState([]);
   const[saved , setSaved] = useState(false);
+  const[error , setError] = useState('');
 
   const getCategories = async () => {
     try {
@@ -34,6 +37,7 @@ const Publish = () => {
   };
   const publishBlog = async (isPublished) => {
     try {
+      console.log(isPublished);
       const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/post`, {
         method: "POST",
         headers: {
@@ -56,7 +60,9 @@ const Publish = () => {
         
       }
     } catch (error) {
-      console.log(error);
+      console.log("Error Response:", response.status);
+  const errorData = await response.json();
+  console.log("Error Data:", errorData);
     }
   };
 
@@ -80,16 +86,28 @@ const Publish = () => {
   };
 
   useEffect(() => {
-    getCategories();
-  }, []);
+    if(!checkToken()){
+      router.replace("/")
+    }else{
+
+      getCategories();
+    }
+  }, [router]);
   
 
   return (
-    <div className='bg-black min-h-screen text-white'>
-      <h1 className='text-center text-3xl font-bold p-4'>Edit Your Blog Here</h1>
+    <div className=' bg-black min-h-screen text-white'>
+      
+      <div className=''>
+
+      <div className='py-3 '>
+      <h1 className='text-center bg-gray-900 w-fit mx-auto rounded-lg py-4 text-3xl  font-bold p-4 border  border-blue-900'>Post Your Blog Here</h1>
+      </div>
+      <div className='w-11/12 m-auto my-4  rounded-lg '>
       <TinyMCEEditor value={content} onChange={handleEditorChange} />
+      </div>
       <div className='text-center m-auto w-fit mt-4'>
-        <button onClick={() => setShowForm((prev) => !prev)} className='text-center border-2 border-purple-900 p-4 m-auto w-fit rounded-full'>
+        <button onClick={() => setShowForm((prev) => !prev)} className='text-center border-2 bg-gray-900 border-blue-900 p-4 m-auto w-fit rounded-lg'>
           Publish
         </button>
       </div>
@@ -134,6 +152,8 @@ const Publish = () => {
       {saved ?   
       <div className='text-green-900 fixed w-fit h-20 top-40 rounded-xl border-2 shadow-gray-500 opacity-15 border-blue-700 left-1/2 transform -translate-x-1/2 bg-white p-4 shadow-md z-50 text-center text-3xl font-bold '>Blog Upload Done</div>
     : null}
+    {error ? error : ''}
+    </div>
     </div>
   );
 };
