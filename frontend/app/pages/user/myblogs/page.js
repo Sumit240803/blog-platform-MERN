@@ -2,7 +2,7 @@
 import UserNav from '@/app/components/UserNav';
 import checkToken from '@/app/utils/checkToken';
 import getToken from '@/app/utils/getToken';
-import { faEye, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faBookmark, faEye, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
@@ -27,6 +27,40 @@ const MyBlogs = () => {
   const getBlog =(id)=>{
     router.replace(`/pages/user/${encodeURIComponent(id)}`)
 }
+  const deleteBlog = async(id)=>{
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/delete/${id}`,{
+        method : "DELETE",
+        headers : {
+          "Authorization" : `Bearer ${token}`
+        }
+      });
+      if(response.ok){
+        console.log("Deleted");
+        router.refresh();
+      }
+    } catch (error) {
+      
+    }
+  }
+  const saveToDraft = async(id)=>{
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/saveDraft`,{
+        method : "POST",
+        headers : {
+          "Authorization" : `Bearer ${token}`,
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({id : id})
+      });
+      if(response.ok){
+        console.log("Drafted")
+        router.refresh();
+      }
+    } catch (error) {
+      
+    }
+  }
 
   useEffect(() => {
     if(!checkToken()){
@@ -50,9 +84,10 @@ const MyBlogs = () => {
               >
                 <div onClick={()=>getBlog(blog.blogId)} className='cursor-pointer text-xl font-semibold'>{blog.title}</div>
                 <div className='space-x-2'>
-                <FontAwesomeIcon icon={faTrash} />
+                <FontAwesomeIcon className='cursor-pointer' onClick={()=>deleteBlog(blog.blogId)} icon={faTrash} />
                 <FontAwesomeIcon icon={faPenToSquare} />
                 <FontAwesomeIcon className='cursor-pointer' onClick={()=>getBlog(blog.blogId)} icon={faEye} />
+                <FontAwesomeIcon className='cursor-pointer' onClick={()=>saveToDraft(blog.blogId)} icon={faBookmark} />
                 </div>
                 
                 

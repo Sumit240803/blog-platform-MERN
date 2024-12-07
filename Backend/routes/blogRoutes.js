@@ -132,10 +132,6 @@ router.delete("/deleteDraft/:id", verifyJwt, async (req, res) => {
     }
 
     // Find the blog by ID
-    const blog = await Blog.findById(id);
-    if (!blog) {
-      return res.status(404).json({ message: "Blog not found" });
-    }
 
     // Check if the blog is in the author's drafts
     const draftIndex = author.drafts.findIndex(draft => draft.blogId.toString() === id);
@@ -146,7 +142,7 @@ router.delete("/deleteDraft/:id", verifyJwt, async (req, res) => {
     }
 
     // Delete the blog from the database
-    await Blog.findByIdAndDelete(id);
+    
 
     // Respond with success
     res.status(200).json({ message: "Draft deleted successfully" });
@@ -280,6 +276,49 @@ router.get("/title" , async(req,res)=>{
     if(blog){
       res.status(200).json({blog : blog});
     }
+  } catch (error) {
+    
+  }
+})
+
+router.delete("/delete/:id", verifyJwt , async(req,res)=>{
+  try {
+    const id = req.params.id;
+    const token = getTokenFromHeader(req);
+    const user = getUser(token);
+    const author = await User.findOne({email : user.email});
+    if(author){
+      const blogIndex = author.published.findIndex(blogs=> blogs.blogId.toString()===id);
+      if(blogIndex!==-1){
+        author.published.pull(author.published[blogIndex]._id);
+      }
+    }
+    await Blog.findByIdAndDelete(id);
+    await author.save();
+    res.status(200).json({ message: "Draft deleted successfully" });
+  } catch (error) {
+    
+  }
+})
+
+router.post("/saveDraft", verifyJwt , async(req,res)=>{
+  try {
+    const {id} = req.body;
+    const token = getTokenFromHeader(req);
+    const user = getUser(token);
+    const author = await User.findOne({email : user.email});
+    const blog = await Blog.findById(id);
+    blog.isPublished = false;
+    await blog.save();
+    if(author){
+      const blogIndex = author.published.findIndex(blogs=> blogs.blogId.toString()===id);
+      if(blogIndex!==-1){
+        author.published.pull(author.published[blogIndex]._id);
+        author.drafts.push({blogId : id , title : blog.title});
+        await author.save();
+      }
+    }
+    res.status(200).json({ message: "Draft saved successfully" });
   } catch (error) {
     
   }

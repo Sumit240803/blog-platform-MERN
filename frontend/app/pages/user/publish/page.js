@@ -5,6 +5,9 @@ import getToken from '@/app/utils/getToken';
 import { useRouter, useSearchParams } from 'next/navigation';
 import UserNav from '@/app/components/UserNav';
 import checkToken from '@/app/utils/checkToken';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
+import Link from 'next/link';
 
 
 const Publish = () => {
@@ -85,6 +88,7 @@ const Publish = () => {
     setContent(newContent);
   };
 
+
   useEffect(() => {
     if(!checkToken()){
       router.replace("/")
@@ -100,7 +104,10 @@ const Publish = () => {
       
       <div className=''>
 
-      <div className='py-3 '>
+      <div className='py-3 items-center flex '>
+        <Link href={"/pages/home"}>
+      <FontAwesomeIcon className='px-4 text-xl' icon={faHouse} />
+        </Link>
       <h1 className='text-center bg-gray-900 w-fit mx-auto rounded-lg py-4 text-3xl  font-bold p-4 border  border-blue-900'>Post Your Blog Here</h1>
       </div>
       <div className='w-11/12 m-auto my-4  rounded-lg '>
