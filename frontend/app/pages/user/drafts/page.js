@@ -2,6 +2,8 @@
 import UserNav from '@/app/components/UserNav';
 import checkToken from '@/app/utils/checkToken';
 import getToken from '@/app/utils/getToken'
+import { faEye, faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
@@ -49,14 +51,20 @@ const Drafts = () => {
     {blogData.length > 0 ? (
       blogData.map((blog) => (
         <div
-          className="w-fit max-w-md text-white h-auto p-6 bg-gray-950 m-3 border-2 border-blue-900 rounded-lg shadow-md hover:shadow-xl transition duration-300"
+          className="w-3/4 max-w-md text-white h-auto p-6 bg-gray-950 m-3 border-2 border-blue-900 rounded-lg shadow-md hover:shadow-xl transition duration-300"
           key={blog._id}
         >
           <div
-            className="text-lg text-center font-semibold text-white cursor-pointer"
+            className=" text-2xl  font-semibold text-white cursor-pointer"
             onClick={() => getBlog(blog.blogId)}
           >
             {blog.title}
+          </div>
+          <div className='space-x-2 text-xs'>
+
+          <FontAwesomeIcon icon={faTrash} />
+          <FontAwesomeIcon icon={faPenToSquare} />
+          <FontAwesomeIcon className='cursor-pointer' onClick={()=>getBlog(blog.blogId)} icon={faEye} />
           </div>
         </div>
       ))
