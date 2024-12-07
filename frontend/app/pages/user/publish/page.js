@@ -12,9 +12,8 @@ import Link from 'next/link';
 
 const Publish = () => {
   const token = getToken();
-  const searchParams = useSearchParams();
-  const username = searchParams.get("username");
-  const email = searchParams.get("email");
+  const username = localStorage.getItem("username")
+  const email = localStorage.getItem("email");
   const router = useRouter();
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');

@@ -27,6 +27,8 @@ const UserNav = () => {
               
                setUsername(data.username);
                setEmail(data.email);
+               localStorage.setItem("email",data.email);
+               localStorage.setItem("username",data.username);
               
             } else {
               router.replace("/");
