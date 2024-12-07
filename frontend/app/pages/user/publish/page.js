@@ -2,8 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import TinyMCEEditor from '@/app/components/TinyMCEEditor';
 import getToken from '@/app/utils/getToken';
-import { useRouter, useSearchParams } from 'next/navigation';
-import UserNav from '@/app/components/UserNav';
+import { useRouter } from 'next/navigation';
+
 import checkToken from '@/app/utils/checkToken';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHouse } from '@fortawesome/free-solid-svg-icons';
@@ -12,8 +12,15 @@ import Link from 'next/link';
 
 const Publish = () => {
   const token = getToken();
-  const username = localStorage.getItem("username")
-  const email = localStorage.getItem("email");
+  const[username , setUsername] = useState("");
+  const[email , setEmail] = useState("");
+  if(localStorage.getItem("username")){
+    setUsername(localStorage.getItem("username"));
+  }
+  if(localStorage.getItem("email")){
+    setEmail(localStorage.getItem("email"));
+  }
+  
   const router = useRouter();
   const [content, setContent] = useState('');
   const [title, setTitle] = useState('');
