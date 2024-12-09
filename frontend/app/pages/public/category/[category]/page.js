@@ -7,7 +7,7 @@ const Category = () => {
     const {category} = useParams();
     const getBlog = async()=>{
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/blogCat`);
+        const response = await fetch(`https://blog-platform-mern.onrender.com/api/blogs/blogCat`);
         if(response.ok){
           const data = await response.json();
           setBlogs(data);

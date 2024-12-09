@@ -7,7 +7,7 @@ const View = () => {
   const [blog, setBlog] = useState(null);
 
   const getBlog = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/id?id=${view}`);
+    const response = await fetch(`https://blog-platform-mern.onrender.com/api/blogs/id?id=${view}`);
     if (response.ok) {
       const data = await response.json();
       setBlog(data.blog);

@@ -12,7 +12,7 @@ const MyBlogs = () => {
   const token = getToken();
     const router = useRouter();
   const myBlogs = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/published`, {
+    const response = await fetch(`https://blog-platform-mern.onrender.com/api/user/published`, {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`,
@@ -29,7 +29,7 @@ const MyBlogs = () => {
 }
   const deleteBlog = async(id)=>{
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/delete/${id}`,{
+      const response = await fetch(`https://blog-platform-mern.onrender.com/api/blogs/delete/${id}`,{
         method : "DELETE",
         headers : {
           "Authorization" : `Bearer ${token}`
@@ -45,7 +45,7 @@ const MyBlogs = () => {
   }
   const saveToDraft = async(id)=>{
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/saveDraft`,{
+      const response = await fetch(`https://blog-platform-mern.onrender.com/api/blogs/saveDraft`,{
         method : "POST",
         headers : {
           "Authorization" : `Bearer ${token}`,

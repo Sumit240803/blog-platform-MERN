@@ -33,7 +33,7 @@ const Publish = () => {
 
   const getCategories = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/categories`, {
+      const response = await fetch(`https://blog-platform-mern.onrender.com/api/blogs/categories`, {
         method: "GET",
       });
       if (response.ok) {
@@ -47,7 +47,7 @@ const Publish = () => {
   const publishBlog = async (isPublished) => {
     try {
       console.log(isPublished);
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/post`, {
+      const response = await fetch(`https://blog-platform-mern.onrender.com/api/blogs/post`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

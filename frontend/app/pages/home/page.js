@@ -15,7 +15,7 @@ const Home = () => {
   const fetchUserInfo = async () => {
     try {
       if (token) {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/userInfo`, {
+        const response = await fetch(`https://blog-platform-mern.onrender.com/api/user/userInfo`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

@@ -29,7 +29,7 @@ const PublicNav = () => {
   const allBlogs = async (page = currentPage) => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/api/blogs/all?page=${page}&size=${pageSize}`,
+        `https://blog-platform-mern.onrender.com/api/blogs/all?page=${page}&size=${pageSize}`,
         {
           method: "GET",
         }
