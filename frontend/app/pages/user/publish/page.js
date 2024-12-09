@@ -14,12 +14,12 @@ const Publish = () => {
   const token = getToken();
   const[username , setUsername] = useState("");
   const[email , setEmail] = useState("");
-  if(localStorage.getItem("username")){
+ /* if(localStorage.getItem("username")){
     setUsername(localStorage.getItem("username"));
   }
   if(localStorage.getItem("email")){
     setEmail(localStorage.getItem("email"));
-  }
+  }*/
   
   const router = useRouter();
   const [content, setContent] = useState('');
@@ -101,6 +101,12 @@ const Publish = () => {
     }else{
 
       getCategories();
+    }
+    if (typeof window !== 'undefined') {
+      const storedUsername = localStorage.getItem("username");
+      const storedEmail = localStorage.getItem("email");
+      if (storedUsername) setUsername(storedUsername);
+      if (storedEmail) setEmail(storedEmail);
     }
   }, [router]);
   
