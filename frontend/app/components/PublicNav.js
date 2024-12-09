@@ -73,12 +73,15 @@ const PublicNav = () => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex bg-blue-50 min-h-screen">
       {/* Side Navigation */}
       <div className="w-60 h-screen bg-gray-900 text-white shadow-md fixed">
-        <h2 className="text-2xl font-bold p-4 border-b border-gray-300">
+        <div className="text-2xl font-bold p-4 border-b border-gray-300">
+
+        <Link href={"/"} >
           Pen Stitched
-        </h2>
+        </Link>
+        </div>
         <h2 className="text-xl font-semibold p-4 border-b border-gray-300">
           Categories
         </h2>
@@ -102,29 +105,29 @@ const PublicNav = () => {
 
       {/* Main Content */}
       <div className="ml-60 p-4 flex-1">
-        <h1 className="text-2xl font-bold mb-4">All Latest Blogs</h1>
-        <p className="mt-2 text-gray-600 mb-4">Select a category to explore blogs.</p>
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">All Latest Pens</h1>
+      
 
         <div className="space-y-6">
           {blogs.length > 0 ? (
             blogs.map((blog) => (
               <div
                 key={blog._id}
-                className="border border-gray-300 p-4 rounded-lg bg-white shadow-sm"
+                className="border border-gray-300 hover:shadow-sm hover:shadow-orange-200 p-4 rounded-lg bg-white shadow-sm"
               >
                 <h2 className="text-xl font-semibold text-gray-900">{blog.title}</h2>
                 <p className="text-sm text-gray-500 mb-2">By {blog.authorName} | {new Date(blog.createdAt).toLocaleDateString()}</p>
 
                 {/* Show trimmed content if it's long */}
                 <div
-                  className="blog-content text-gray-700"
+                  className="blog-content text-gray-700 bg-gray-200 p-3 rounded-lg"
                   dangerouslySetInnerHTML={{ __html: trimContent(blog.content, 200) }} // Adjust length here
                 />
 
                 {/* Show "Read More" only if content was trimmed */}
                 {blog.content.replace(/<[^>]*>/g, '').length > 200 && (
                   <div className="mt-4">
-                    <Link href={`/pages/public/blog/${blog._id}`} className="text-blue-500 hover:underline">
+                    <Link href={`/pages/public/id/${blog._id}`} className="text-blue-600 hover:underline">
                       Read More
                     </Link>
                   </div>

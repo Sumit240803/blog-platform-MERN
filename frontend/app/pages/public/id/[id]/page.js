@@ -1,13 +1,17 @@
 "use client"
+import Footer from '@/app/components/Footer';
+import Navbar from '@/app/components/Navbar';
+import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 const Id = () => {
-  const { view } = useParams();
+  const { id } = useParams();
   const [blog, setBlog] = useState(null);
 
   const getBlog = async () => {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/id?id=${view}`);
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/blogs/id?id=${id}`);
     if (response.ok) {
       const data = await response.json();
       setBlog(data.blog);
@@ -23,10 +27,27 @@ const Id = () => {
   }
 
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-8">
+    <div>
+<div>
+  <Navbar/>
+</div>
+    
+    <div className="max-w-5xl mx-auto p-6 border bg-gray-50 border-gray-900 border-opacity-50 shadow-lg rounded-lg mt-8">
       <div className="text-center mb-6">
         <h1 className="text-3xl font-bold text-gray-800">{blog.title}</h1>
-        <p className="text-gray-500 text-sm">By {blog.authorName} | {new Date(blog.createdAt).toLocaleDateString()}</p>
+        <p className="text-gray-500 text-sm">
+  <span className="group relative">
+    <FontAwesomeIcon 
+      className="cursor-pointer px-1" 
+      icon={faUserPlus} 
+    />
+    <span className="absolute left-0 -top-6 text-sm bg-gray-700 text-white px-2 py-1 rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
+      Follow
+    </span>
+  </span>
+  By {blog.authorName} | {new Date(blog.createdAt).toLocaleDateString()}
+</p>
+
       </div>
 
       <div className="content" dangerouslySetInnerHTML={{ __html: blog.content }} />
@@ -55,8 +76,12 @@ const Id = () => {
 
       <div className="mt-8">
         <h3 className="text-lg font-semibold text-gray-700">Author Contact:</h3>
-        <p className="text-blue-500">{blog.authorEmail}</p>
+        <a  className="text-blue-500">{blog.authorEmail}</a>
       </div>
+    </div>
+    <div className='mt-6'>
+      <Footer/>
+    </div>
     </div>
   );
 }
