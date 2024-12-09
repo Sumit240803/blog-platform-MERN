@@ -9,7 +9,7 @@ dotenv.config()
 const app = express();
 app.use(express.json());
 app.use(cors());
-mongoose.connect(process.env.DB_DEV).then(()=> console.log("Mongo DB"));
+mongoose.connect(process.env.DB_PROD).then(()=> console.log("Mongo DB"));
 app.use("/api/auth" ,authRoutes);
 app.use("/api/blogs" , blogRoutes);
 app.use("/api/user", userRoutes)
