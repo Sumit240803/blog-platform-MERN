@@ -12,7 +12,7 @@ const PublicNav = () => {
   const getCategories = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API}/api/blogs/categories`,
+        `https://blog-platform-mern.onrender.com/api/blogs/categories`,
         {
           method: "GET",
         }
