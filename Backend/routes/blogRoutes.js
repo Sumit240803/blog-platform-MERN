@@ -177,8 +177,8 @@ router.get("/all" , async(req,res)=>{
         const {page = 1 , size = 10} = req.query;
         const pagesToSkip = (page-1)*size;
 
-        const blogs = await Blog.find().skip(pagesToSkip).limit(size).sort({updatedAt : -1});
-        const totalBlogs = await Blog.countDocuments();
+        const blogs = await Blog.find({isPublished : true}).skip(pagesToSkip).limit(size).sort({updatedAt : -1});
+        const totalBlogs = await Blog.countDocuments({isPublished : true});
 
         const totalPages = Math.ceil(totalBlogs/size);
         if(blogs.length > 0){
@@ -319,6 +319,18 @@ router.post("/saveDraft", verifyJwt , async(req,res)=>{
       }
     }
     res.status(200).json({ message: "Draft saved successfully" });
+  } catch (error) {
+    
+  }
+})
+
+router.get("/blogCat", async(req,res)=>{
+  try {
+    const {category} = req.body;
+    const blogs = await Blog.find({category});
+    if(blogs){
+      res.status(200).json(blogs);
+    }
   } catch (error) {
     
   }
