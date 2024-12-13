@@ -14,8 +14,10 @@ const UserNav = () => {
     };
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
+    const [role, setRole] = useState('');
     const router = useRouter();
     const token = getToken();
+
     const fetchUserInfo = async () => {
         try {
             if (token) {
@@ -30,6 +32,7 @@ const UserNav = () => {
                     setEmail(data.email);
                     localStorage.setItem("email", data.email);
                     localStorage.setItem("username", data.username);
+                    setRole(data.role);
                 } else {
                     router.replace("/");
                 }
@@ -71,31 +74,72 @@ const UserNav = () => {
                             <FontAwesomeIcon className='text-xl' icon={faHouseUser} />
                         </Link>
                     </div>
-                    <div>
-                        <Link href={`/pages/user/publish?username=${username}&email=${email}`} className="hover:text-blue-500">
-                            Publish Blog
-                        </Link>
-                    </div>
-                    <div>
-                        <Link href={"/pages/user/myblogs"} className="hover:text-blue-500">
-                            Your Blogs
-                        </Link>
-                    </div>
-                    <div>
-                        <Link href={"/pages/user/drafts"} className="hover:text-blue-500">
-                            Drafts
-                        </Link>
-                    </div>
-                    <div>
-                        <Link href={"/pages/user/analytics"} className="hover:text-blue-500">
-                            Analytics
-                        </Link>
-                    </div>
-                    <div>
-                        <Link href={"/pages/user/settings"} className="hover:text-blue-500">
-                            Settings
-                        </Link>
-                    </div>
+
+                    {/* Conditional rendering based on role */}
+                    {role === 'Reader' ? (
+                        <>
+                            <div>
+                                <Link href={`/pages/user/favorites`} className="hover:text-blue-500">
+                                    Favorites
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={`/pages/user/liked`} className="hover:text-blue-500">
+                                    Liked Pens
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={`/pages/user/recent`} className="hover:text-blue-500">
+                                    Recent Pens
+                                </Link>
+                            </div>
+                        </>
+                    ) : role === 'Blogger' ? (
+                        <>
+                            <div>
+                                <Link href={`/pages/user/publish?username=${username}&email=${email}`} className="hover:text-blue-500">
+                                    Publish Pen
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={"/pages/user/myblogs"} className="hover:text-blue-500">
+                                    Your Pens
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={"/pages/user/drafts"} className="hover:text-blue-500">
+                                    Drafts
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={"/pages/user/analytics"} className="hover:text-blue-500">
+                                    Analytics
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={`/pages/user/favorites`} className="hover:text-blue-500">
+                                    Favorites
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={`/pages/user/liked`} className="hover:text-blue-500">
+                                    Liked Pens
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={`/pages/public/home`} className="hover:text-blue-500">
+                                    Recent Pens
+                                </Link>
+                            </div>
+                            <div>
+                                <Link href={"/pages/user/settings"} className="hover:text-blue-500">
+                                    Settings
+                                </Link>
+                            </div>
+                        </>
+                    ) : null}
+
+                    {/* Common Log Out Button */}
                     <div>
                         <button className='hover:text-red-500' onClick={logout}>
                             Log Out

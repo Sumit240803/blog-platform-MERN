@@ -9,67 +9,76 @@ const userSchema = new mongoose.Schema(
       required: true,
       unique: true,  
       trim: true    
-       
     },
     email: {
       type: String,
       required: true,
-      unique: true,  // Ensure the email is unique
-      lowercase: true, // Convert the email to lowercase before saving
-      match: [/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, 'Please enter a valid email'], // Regex for email validation
+      unique: true,  
+      lowercase: true,
+      match: [/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/, 'Please enter a valid email'],
     },
     password: {
       type: String,
       required: true,
-      
-    }, 
-    published :[
-      {
-        blogId : {type : String},
-        title : {type :String}
-      }
-    ],
-    drafts : [
-      {
-        blogId : {type : String},
-        title : {type : String}
-      }
-    ],
-    followers : [
-      {
-        userId : {type : String}
-      }
-    ],
-    following : [
-      {
-        userId : {type : String}
-      }
-    ],
-    bio : {
-      type : String
     },
-    avatar : {
-      type : String 
+    role: {
+      type: String,
+      enum: ['Blogger', 'Reader'], // Restrict roles to Blogger and Reader
+      default: 'Reader',          // Default role is Reader
     },
-    revenue : {
-      type : String
+    published: [
+      {
+        blogId: { type: String },
+        title: { type: String },
+      }
+    ],
+    liked: [
+      {
+        id: { type: String },
+        name : {type : String}
+      }
+    ],
+    drafts: [
+      {
+        blogId: { type: String },
+        title: { type: String },
+      }
+    ],
+    followers: [
+      {
+        userId: { type: String },
+      }
+    ],
+    following: [
+      {
+        userId: { type: String },
+      }
+    ],
+    bio: {
+      type: String,
+    },
+    avatar: {
+      type: String,
+    },
+    revenue: {
+      type: String,
     }
   },
   {
-    timestamps: true, // Automatically add createdAt and updatedAt fields
+    timestamps: true,
   }
 );
 
 // Hash the password before saving it to the database
 userSchema.pre('save', async function(next) {
-  if (!this.isModified('password')) return next();  // If password isn't modified, skip hashing
+  if (!this.isModified('password')) return next();
 
   try {
-    const salt = await bcrypt.genSalt(10);  // Generate salt with 10 rounds
-    this.password = await bcrypt.hash(this.password, salt);  // Hash the password
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
     next();
   } catch (err) {
-    next(err);  // If there's an error, pass it to the next middleware
+    next(err);
   }
 });
 

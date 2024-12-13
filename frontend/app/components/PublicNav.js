@@ -1,14 +1,21 @@
 "use client";
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
+import getToken from '../utils/getToken';
+import checkToken from '../utils/checkToken';
+import { faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import LoginForm from './LoginForm';
 
 const PublicNav = () => {
   const [categories, setCategories] = useState([]);
+  const token = getToken();
+  const [isLogged , setIsLogged] = useState(false);
   const [blogs, setBlogs] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // Track current page
   const [totalPages, setTotalPages] = useState(1); // Track total pages
   const pageSize = 5; // Set the page size
-
+  const [ show , setShow] = useState(false);
   const getCategories = async () => {
     try {
       const response = await fetch(
@@ -54,6 +61,9 @@ const PublicNav = () => {
   };
 
   useEffect(() => {
+    if(checkToken(token)){
+      setIsLogged(true);
+    }
     getCategories();
     allBlogs(); // Initially fetch the first page of blogs
   }, []);
@@ -71,16 +81,22 @@ const PublicNav = () => {
       allBlogs(currentPage - 1); // Fetch the previous page
     }
   };
+  const likePen = ()=>{
+    if(!isLogged){
+      setShow(true);
+    }
+    console.log("Can Like")
+  }
 
   return (
     <div className="flex bg-blue-50 min-h-screen">
       {/* Side Navigation */}
       <div className="w-60 h-screen bg-gray-900 text-white shadow-md fixed">
         <div className="text-2xl font-bold p-4 border-b border-gray-300">
-
-        <Link href={"/"} >
+        {isLogged ? <Link href={"/pages/home"}>My Account</Link> : <Link href={"/"} >
           Pen Stitched
-        </Link>
+        </Link>}
+        
         </div>
         <h2 className="text-xl font-semibold p-4 border-b border-gray-300">
           Categories
@@ -115,7 +131,8 @@ const PublicNav = () => {
                 key={blog._id}
                 className="border border-gray-300 hover:shadow-sm hover:shadow-orange-200 p-4 rounded-lg bg-white shadow-sm"
               >
-                <h2 className="text-xl font-semibold text-gray-900">{blog.title}</h2>
+                <h2 className="text-xl font-semibold text-gray-900">{blog.title}<FontAwesomeIcon className='px-3 cursor-pointer' onClick={likePen} icon={faThumbsUp} /></h2>
+                {show && <LoginForm/>}
                 <p className="text-sm text-gray-500 mb-2">By {blog.authorName} | {new Date(blog.createdAt).toLocaleDateString()}</p>
 
                 {/* Show trimmed content if it's long */}

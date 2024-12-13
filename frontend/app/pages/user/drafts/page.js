@@ -106,7 +106,7 @@ const Drafts = () => {
         </div>
       ))
     ) : (
-      <div className="text-gray-500">No blogs right now.</div>
+      <div className="text-gray-500">No drafts right now.</div>
     )}
   </div>
 </div>

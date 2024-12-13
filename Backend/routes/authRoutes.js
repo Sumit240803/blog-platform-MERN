@@ -10,7 +10,7 @@ const router = express.Router();
 
 // Example route for user registration
 router.post('/register', async (req, res) => {
-    const { username, email, password } = req.body;
+    const { username, email, password , role } = req.body;
   
     try {
       // Check if the user already exists
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
       }
   
       // Create and save the new user
-      const newUser = new User({ username, email, password });
+      const newUser = new User({ username, email, password,role });
       await newUser.save();
   
       res.status(201).send('User registered successfully');

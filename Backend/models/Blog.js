@@ -29,7 +29,7 @@ const blogSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  views: {
+  likes: {
     type: Number,
     default: 0,
   },
