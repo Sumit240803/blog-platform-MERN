@@ -1,110 +1,112 @@
-"use client"
-import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
+"use client";
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 import checkToken from '../utils/checkToken';
 import { useRouter } from 'next/navigation';
 import getToken from '../utils/getToken';
+import { faHouseUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const UserNav = () => {
     const [open, setOpen] = useState(true);
     const handleMenu = () => {
         setOpen((prev) => !prev);
-    }
-    const [username , setUsername] = useState('');
-    const [email , setEmail] = useState('');
+    };
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const router = useRouter();
     const token = getToken();
     const fetchUserInfo = async () => {
         try {
-          if (token) {
-            const response = await fetch(`https://blog-platform-mern.onrender.com/api/user/userInfo`, {
-              headers: {
-                Authorization: `Bearer ${token}`,
-              },
-            });
-            if (response.ok) {
-              const data = await response.json();
-              
-               setUsername(data.username);
-               setEmail(data.email);
-               localStorage.setItem("email",data.email);
-               localStorage.setItem("username",data.username);
-              
-            } else {
-              router.replace("/");
+            if (token) {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/userInfo`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    setUsername(data.username);
+                    setEmail(data.email);
+                    localStorage.setItem("email", data.email);
+                    localStorage.setItem("username", data.username);
+                } else {
+                    router.replace("/");
+                }
             }
-          }
         } catch (error) {
-          console.error("Error fetching user info:", error);
+            console.error("Error fetching user info:", error);
         }
-      };
-      const logout = ()=>{
+    };
+
+    const logout = () => {
         localStorage.clear();
-        router.replace("/")
-      }
-      useEffect(() => {
+        router.replace("/");
+    };
+
+    useEffect(() => {
         if (!checkToken()) {
-          router.replace("/");
+            router.replace("/");
         } else {
-          fetchUserInfo();
+            fetchUserInfo();
         }
-      }, []);
+    }, []);
+
     return (
-        <div>{
-            !open ?
-                <button className='text-3xl p-4 text-white' onClick={handleMenu}>
+        <div>
+            {!open ? (
+                <button className='text-xl p-4 text-white' onClick={handleMenu}>
                     &#9776;
                 </button>
-                : ""}
-            {open ?
-
-                <div className='bg-zinc-900 w-40 min-h-screen p-6 text-white z-0'>
-                    <button className='text-3xl  mx-0' onClick={handleMenu}>
-                    &#x02DF;
+            ) : (
+                ""
+            )}
+            {open ? (
+                <div className='bg-zinc-900 w-40 min-h-screen p-6 text-white z-0 font-mono space-y-4 font-semibold text-lg'>
+                    <button className='text-7xl mx-0' onClick={handleMenu}>
+                        &#x02DF;
                     </button>
                     <div>
-                        
-                    <Link href={"/pages/home"}>
-                        {username}
-                    </Link>
+                        <Link href={"/pages/home"} className="hover:text-green-500">
+                            <FontAwesomeIcon className='text-xl' icon={faHouseUser} />
+                        </Link>
                     </div>
                     <div>
-
-                    <Link href={`/pages/user/publish?username=${username}&email=${email}`}>
-                        Publish Blog
-                    </Link>
+                        <Link href={`/pages/user/publish?username=${username}&email=${email}`} className="hover:text-blue-500">
+                            Publish Blog
+                        </Link>
                     </div>
                     <div>
-
-                    <Link href={"/pages/user/myblogs"}>
-                        Your Blogs
-                    </Link>
+                        <Link href={"/pages/user/myblogs"} className="hover:text-blue-500">
+                            Your Blogs
+                        </Link>
                     </div>
                     <div>
-
-                    <Link href={"/pages/user/drafts"}>
-                        Drafts
-                    </Link>
+                        <Link href={"/pages/user/drafts"} className="hover:text-blue-500">
+                            Drafts
+                        </Link>
                     </div>
                     <div>
-
-                    <Link href={"/pages/user/analytics"}>
-                        Analytics
-                    </Link>
+                        <Link href={"/pages/user/analytics"} className="hover:text-blue-500">
+                            Analytics
+                        </Link>
                     </div>
                     <div>
-                    <Link href={"/pages/user/settings"}>
-                        Settings
-                    </Link>
+                        <Link href={"/pages/user/settings"} className="hover:text-blue-500">
+                            Settings
+                        </Link>
                     </div>
                     <div>
-                    <button onClick={logout}>
-                        Log Out
-                    </button>
+                        <button className='hover:text-red-500' onClick={logout}>
+                            Log Out
+                        </button>
                     </div>
-                </div> : ""}
+                </div>
+            ) : (
+                ""
+            )}
         </div>
-    )
-}
+    );
+};
 
-export default UserNav
+export default UserNav;

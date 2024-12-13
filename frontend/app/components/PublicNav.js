@@ -12,7 +12,7 @@ const PublicNav = () => {
   const getCategories = async () => {
     try {
       const response = await fetch(
-        `https://blog-platform-mern.onrender.com/api/blogs/categories`,
+        `${process.env.NEXT_PUBLIC_API}/api/blogs/categories`,
         {
           method: "GET",
         }
@@ -29,7 +29,7 @@ const PublicNav = () => {
   const allBlogs = async (page = currentPage) => {
     try {
       const response = await fetch(
-        `https://blog-platform-mern.onrender.com/api/blogs/all?page=${page}&size=${pageSize}`,
+        `${process.env.NEXT_PUBLIC_API}/api/blogs/all?page=${page}&size=${pageSize}`,
         {
           method: "GET",
         }

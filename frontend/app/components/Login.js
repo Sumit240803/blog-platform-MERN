@@ -33,7 +33,7 @@ const Login = () => {
     },2000);
     if(formData.email!==''){
         setError(false);
-        const response = await fetch(`https://blog-platform-mern.onrender.com/api/auth/sendOtp`,{
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/sendOtp`,{
             method : "POST",
             headers : {
                 "Content-Type" : "application/json"
@@ -59,7 +59,7 @@ const Login = () => {
     e.preventDefault();
     if (isOtpLogin) {
       console.log("OTP Login Data", { email: formData.email, otp: formData.otp });
-      const response = await fetch(`https://blog-platform-mern.onrender.com/api/auth/verify`,{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/verify`,{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
@@ -87,7 +87,7 @@ const Login = () => {
         email: formData.email,
         password: formData.password,
       });
-      const response = await fetch(`https://blog-platform-mern.onrender.com/api/auth/login`,{
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/auth/login`,{
         method : "POST",
         headers : {
             "Content-Type" : "application/json"
