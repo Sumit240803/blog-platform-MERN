@@ -3,7 +3,7 @@ import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import getToken from '../utils/getToken';
 import checkToken from '../utils/checkToken';
-import { faHeart, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faHeart, faStar, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import LoginForm from './LoginForm';
 
@@ -81,12 +81,12 @@ const PublicNav = () => {
       allBlogs(currentPage - 1); // Fetch the previous page
     }
   };
-  const likePen = ()=>{
+ /* const likePen = ()=>{
     if(!isLogged){
       setShow(true);
     }
     console.log("Can Like")
-  }
+  }*/
 
   return (
     <div className="flex bg-blue-50 min-h-screen">
@@ -131,8 +131,8 @@ const PublicNav = () => {
                 key={blog._id}
                 className="border border-gray-300 hover:shadow-sm hover:shadow-orange-200 p-4 rounded-lg bg-white shadow-sm"
               >
-                <h2 className="text-xl font-semibold text-gray-900">{blog.title}<FontAwesomeIcon className='px-3 cursor-pointer' onClick={likePen} icon={faThumbsUp} /></h2>
-                {show && <LoginForm/>}
+                <h2 className="text-xl font-semibold text-gray-900">{blog.title}</h2>
+             
                 <p className="text-sm text-gray-500 mb-2">By {blog.authorName} | {new Date(blog.createdAt).toLocaleDateString()}</p>
 
                 {/* Show trimmed content if it's long */}
