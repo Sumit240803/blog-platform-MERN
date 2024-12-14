@@ -13,6 +13,7 @@ const Id = () => {
   const [isLogged, setIsLogged] = useState(false);
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
+  const [liked , setLiked] = useState(false);
   const token = getToken();
  
 
@@ -42,6 +43,7 @@ const Id = () => {
       body : JSON.stringify({"blogId" : id})
     });
     if(response.ok){
+      alert("Blog Liked")
       console.log("Liked");
     }
   };
@@ -72,6 +74,7 @@ const Id = () => {
                 icon={faStar}
                 onClick={likePen}
                 />
+                
               <FontAwesomeIcon className="cursor-pointer px-1" icon={faUserPlus} />
             </span>
               : <span>
