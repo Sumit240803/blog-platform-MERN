@@ -14,7 +14,7 @@ const Id = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
   const token = getToken();
-  const [show, setShow] = useState(false);
+ 
 
   // Fetch blog details
   const getBlog = async () => {
@@ -32,11 +32,17 @@ const Id = () => {
   };
 
   // Handle like button
-  const likePen = () => {
-    if (!isLogged) {
-      setShow(true);
-    } else {
-      console.log("User is logged in. Handle like logic here.");
+  const likePen = async() => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/like`,{
+      method : "POST",
+      headers : {
+        "Authorization" : `Bearer ${token}`,
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({"blogId" : id})
+    });
+    if(response.ok){
+      console.log("Liked");
     }
   };
 

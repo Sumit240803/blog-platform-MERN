@@ -88,15 +88,17 @@ router.post("/like", verifyJwt, async (req, res) => {
       }
   
       // Increment the blog's like count
-      blog.likes += 1;
-      await blog.save();
+      
+      
   
       // Update the user's liked array
       const alreadyLiked = user.liked.some((likedBlog) => likedBlog.id === blog.id);
   
       if (!alreadyLiked) {
         user.liked.push({ id: blog.id,name : blog.title });
+        blog.likes += 1;
         await user.save();
+        await blog.save();
       }
   
       res.status(200).json({
@@ -149,6 +151,23 @@ router.post("/like", verifyJwt, async (req, res) => {
       res.status(500).json({ message: "Internal server error" });
     }
   });
+router.get("/likes" , verifyJwt , async(req,res)=>{
+  try {
+    const token = getTokenFromHeader(req);
+      if (!token) {
+        return res.status(401).json({ message: "Invalid token" });
+      }
   
+      const decoded = getUser(token); // Assuming this decodes the token to get user info
+      const user = await User.findOne({ email: decoded.email });
+      if(user){
+        return res.status(200).json({
+          liked: user.liked,
+        });
+      }
+  } catch (error) {
+    
+  }
+})
 
 export default router;

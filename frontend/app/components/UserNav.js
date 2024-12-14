@@ -116,11 +116,7 @@ const UserNav = () => {
                                     Analytics
                                 </Link>
                             </div>
-                            <div>
-                                <Link href={`/pages/user/favorites`} className="hover:text-blue-500">
-                                    Favorites
-                                </Link>
-                            </div>
+                           
                             <div>
                                 <Link href={`/pages/user/liked`} className="hover:text-blue-500">
                                     Liked Pens
