@@ -85,7 +85,7 @@ const MyBlogs = () => {
                 <div onClick={()=>getBlog(blog.blogId)} className='cursor-pointer text-xl font-semibold'>{blog.title}</div>
                 <div className='space-x-2'>
                 <FontAwesomeIcon className='cursor-pointer' onClick={()=>deleteBlog(blog.blogId)} icon={faTrash} />
-                <FontAwesomeIcon icon={faPenToSquare} />
+                
                 <FontAwesomeIcon className='cursor-pointer' onClick={()=>getBlog(blog.blogId)} icon={faEye} />
                 <FontAwesomeIcon className='cursor-pointer' onClick={()=>saveToDraft(blog.blogId)} icon={faBookmark} />
                 </div>
