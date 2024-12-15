@@ -47,6 +47,24 @@ const Id = () => {
       console.log("Liked");
     }
   };
+  const follow = async()=>{
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API}/api/user/follow`, {
+        method : "POST",
+        headers: {
+          "Authorization": `Bearer ${token}`,
+          "Content-Type" : "application/json"
+        },
+        body : JSON.stringify({"email" : blog.authorEmail})
+      });
+      if(response.ok){
+        alert("FOllowd")
+        router.refresh();
+      }
+    } catch (error) {
+      
+    }
+  }
 
   useEffect(() => {
     if (checkToken(token)) {
@@ -75,7 +93,7 @@ const Id = () => {
                 onClick={likePen}
                 />
                 
-              <FontAwesomeIcon className="cursor-pointer px-1" icon={faUserPlus} />
+              <FontAwesomeIcon onClick={follow} className="cursor-pointer px-1" icon={faUserPlus} />
             </span>
               : <span>
               <FontAwesomeIcon

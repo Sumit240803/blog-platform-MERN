@@ -335,4 +335,69 @@ router.get("/blogCat", async(req,res)=>{
     
   }
 })
+
+router.get("/blogs-over-time", verifyJwt, async (req, res) => {
+  try {
+    // Extract token from headers
+    const token = getTokenFromHeader(req);
+
+    if (!token) {
+      return res.status(401).json({ message: "Authorization token is required" });
+    }
+
+    // Decode the token to get user info
+    const decoded = getUser(token);
+
+    if (!decoded || !decoded.email) {
+      return res.status(401).json({ message: "Invalid token" });
+    }
+
+    // Find the user based on the decoded email
+    const user = await User.findOne({ email: decoded.email });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Get the published blogs from the user's profile
+    const publishedBlogs = user.published;
+
+    if (!publishedBlogs || publishedBlogs.length === 0) {
+      return res.status(404).json({ message: "No published blogs found" });
+    }
+
+    // Fetch blog details (title, blogId, createdAt, likes)
+    const blogPromises = publishedBlogs.map(async (publishedBlog) => {
+      const blog = await Blog.findById(publishedBlog.blogId).exec();
+      if (blog) {
+        return {
+          title: blog.title,
+          blogId: blog._id,
+          createdAt: blog.createdAt,
+          likes: blog.likes || 0, // Ensure likes field is present, defaulting to 0 if not available
+        };
+      } else {
+        return null; // If the blog is not found, return null
+      }
+    });
+
+    // Wait for all blog fetches to complete
+    const blogs = await Promise.all(blogPromises);
+
+    // Filter out any null results (in case a blog was not found)
+    const filteredBlogs = blogs.filter(blog => blog !== null);
+
+    // If no blogs were found, return a response
+    if (filteredBlogs.length === 0) {
+      return res.status(404).json({ message: "No blogs available" });
+    }
+
+    // Respond with the list of blogs, including likes and createdAt dates
+    return res.status(200).json({ blogs: filteredBlogs });
+  } catch (error) {
+    console.error("Error in fetching blogs over time:", error);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 export default router;

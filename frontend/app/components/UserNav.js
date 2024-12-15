@@ -89,7 +89,7 @@ const UserNav = () => {
                                 </Link>
                             </div>
                             <div>
-                                <Link href={`/pages/user/recent`} className="hover:text-blue-500">
+                                <Link href={`/pages/public/home`} className="hover:text-blue-500">
                                     Recent Pens
                                 </Link>
                             </div>
