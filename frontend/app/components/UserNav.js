@@ -8,7 +8,7 @@ import { faHouseUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const UserNav = () => {
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const handleMenu = () => {
         setOpen((prev) => !prev);
     };
@@ -65,7 +65,7 @@ const UserNav = () => {
                 ""
             )}
             {open ? (
-                <div className='bg-zinc-900 w-40 min-h-screen p-6 text-white z-0 font-mono space-y-4 font-semibold text-lg'>
+                <div className='bg-zinc-900 md:z-0 w-40 md:w-36 sm:w-32 sm:text-sm xl:text-lg xl:w-40 min-h-screen p-6 text-white  font-mono space-y-4 font-semibold text-lg'>
                     <button className='text-7xl mx-0' onClick={handleMenu}>
                         &#x02DF;
                     </button>

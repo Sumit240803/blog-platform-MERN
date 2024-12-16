@@ -321,4 +321,21 @@ router.get('/followings', verifyJwt, async (req, res) => {
   }
 });
 
+router.patch("/addBio", verifyJwt, async (req, res) => {
+  const { bio } = req.body; // Extract bio from the request body
+  const token = getTokenFromHeader(req);
+  
+  if (!token) {
+        return res.status(401).json({ message: "Invalid token" });
+    }
+  
+  const decoded = getUser(token); // Assuming this decodes the token to get user info
+  const currentUser = await User.findOne({ email: decoded.email });
+
+  currentUser.bio = bio; // Update the bio field
+    await currentUser.save(); // Save the updated user document
+
+    return res.status(200).json({ message: "Bio updated successfully.", bio: currentUser.bio });
+});
+
 export default router;
