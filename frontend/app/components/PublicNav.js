@@ -197,7 +197,7 @@ const PublicNav = () => {
           </button>
         </div>
       </div>
-      <Footer/>
+     
     </div>
   );
 };
