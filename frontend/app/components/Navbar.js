@@ -3,7 +3,7 @@ import React from 'react';
 
 const Navbar = () => {
   return (
-    <div className="flex flex-col xl:text-3xl md:flex-row items-center bg-black text-white py-4 px-6 md:justify-between">
+    <div className="flex flex-col xl:text-3xl md:flex-row items-center bg-black bg-opacity-60 text-white py-4 px-6 md:justify-between">
       {/* Brand Logo */}
       <div className="font-bold xl:text-3xl ">
         <Link

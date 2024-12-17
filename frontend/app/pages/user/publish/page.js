@@ -112,7 +112,7 @@ const Publish = () => {
   
 
   return (
-    <div className=' bg-black min-h-screen text-white'>
+    <div className=' bg-contact min-h-screen text-white'>
       
       <div className=''>
 

@@ -78,10 +78,10 @@ const Id = () => {
   }
 
   return (
-    <div>
+    <div className="bg-contact">
       <Navbar />
 
-      <div className="max-w-5xl mx-auto p-6 border bg-gray-50 border-gray-900 border-opacity-50 shadow-lg rounded-lg mt-8">
+      <div className="max-w-5xl mx-auto p-6 border bg-white bg-opacity-80 border-gray-900 border-opacity-50 shadow-lg rounded-lg mt-8">
         <div className="text-center mb-6">
           <h1 className="text-3xl font-bold text-gray-800">{blog.title}</h1>
           <p className="text-gray-500 text-sm">
@@ -115,7 +115,7 @@ const Id = () => {
           <h3 className="text-lg font-semibold text-gray-700">Tags:</h3>
           <div className="flex flex-wrap gap-2 mt-2">
             {blog.tags.map((tag, index) => (
-              <span key={index} className="px-3 py-1 bg-gray-200 rounded-full text-sm">
+              <span key={index} className="px-3 py-1 bg-gray-800 text-white rounded-full text-sm">
                 {tag}
               </span>
             ))}
@@ -128,7 +128,7 @@ const Id = () => {
             {blog.category.map((category, index) => (
               <span
                 key={index}
-                className="px-3 py-1 bg-gray-200 rounded-full text-sm"
+                className="px-3 py-1 bg-gray-800 text-white rounded-full text-sm"
               >
                 {category}
               </span>
@@ -136,9 +136,7 @@ const Id = () => {
           </div>
         </div>
 
-        <div className="mt-6">
-          <p className="text-gray-600">Views: {blog.views}</p>
-        </div>
+        
 
         <div className="mt-8">
           <h3 className="text-lg font-semibold text-gray-700">Author Contact:</h3>

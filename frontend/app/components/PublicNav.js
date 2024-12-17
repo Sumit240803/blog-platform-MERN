@@ -82,7 +82,7 @@ const PublicNav = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row bg-green-50 min-h-screen">
+    <div className="flex flex-col bg-contact md:flex-row bg-green-50 min-h-screen">
       {/* Sidebar */}
       <div
         className={`fixed z-30 inset-y-0 left-0 transform bg-gray-900 text-white shadow-md transition-transform md:relative md:translate-x-0 ${
@@ -136,7 +136,7 @@ const PublicNav = () => {
 
       {/* Main Content */}
       <div className="md:ml-60 xl:ml-10 p-4 flex-1">
-        <h1 className="text-3xl text-center font-bold mb-4 text-gray-800">
+        <h1 className="text-3xl text-center font-bold mb-4 text-gray-200">
           All Latest Pens
         </h1>
         <div className="space-y-6">
@@ -146,7 +146,7 @@ const PublicNav = () => {
                 key={blog._id}
                 className="border border-gray-300 hover:shadow-sm hover:shadow-orange-200 p-4 rounded-lg bg-white shadow-sm"
               >
-                <h2 className="text-xl font-semibold text-gray-900">
+                <h2 className="text-3xl font-bold text-gray-900">
                   {blog.title}
                 </h2>
                 <p className="text-sm text-gray-500 mb-2">
@@ -154,7 +154,7 @@ const PublicNav = () => {
                   {new Date(blog.createdAt).toLocaleDateString()}
                 </p>
                 <div
-                  className="blog-content text-gray-700 bg-gray-200 p-3 rounded-lg"
+                  className="blog-content text-gray-700 bg-gray-200 p-3 text-lg rounded-lg"
                   dangerouslySetInnerHTML={{
                     __html: trimContent(blog.content, 200),
                   }}

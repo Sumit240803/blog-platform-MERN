@@ -113,8 +113,8 @@ const Login = () => {
 
   return (
     <div className="p-6 w-full max-w-sm mx-auto">
-      <h2 className="text-lg font-semibold mb-4">
-        {isOtpLogin ? "Login with OTP" : "Login with Email & Password"}
+      <h2 className="text-lg font-semibold mb-4 ">
+        {isOtpLogin ? <span>Login with OTP </span>:<span> Login with Email & Password</span>}
       </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Common Email Input */}
@@ -173,7 +173,7 @@ const Login = () => {
 
         {/* Submit Button */}
         <button
-          type="submit" className="w-full p-2 bg-black border border-white rounded text-white font-semibold hover:bg-blue-600"
+          type="submit" className="w-full p-2 bg-black bg-opacity-45  rounded text-white font-semibold hover:bg-gray-900 hover:bg-opacity-45"
           
         >
           {isOtpLogin ? "Login with otp" : "Login"}
@@ -185,7 +185,7 @@ const Login = () => {
         <button
           type="button"
           onClick={() => setIsOtpLogin(!isOtpLogin)}
-          className="text-blue-600 font-semibold"
+          className="text-green-300 bg-black p-2 rounded bg-opacity-50  font-bold"
         >
           {isOtpLogin
             ? "Switch to Email & Password Login"

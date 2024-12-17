@@ -106,7 +106,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen flex bg-black text-white">
+    <div className="min-h-screen flex bg-contact bg-black text-white">
       {/* Side Navigation */}
       <div className="flex-shrink-0">
         <UserNav />
@@ -117,7 +117,7 @@ const Home = () => {
         {/* Profile Section */}
         <div className="flex flex-col items-center">
           <Image
-            src="/profile.png"
+            src="/1.jpg"
             width={128}
             height={128}
             alt="Profile"
@@ -129,7 +129,7 @@ const Home = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 bg-gray-900 p-6 rounded-lg shadow-blue-900 shadow xl:w-1/2 m-auto w-full">
+        <div className="bg-home-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8 bg-gray-900 p-6 rounded-lg shadow-blue-900 shadow xl:w-1/2 m-auto w-full">
           <div
             onClick={showFollowers}
             className="p-2 cursor-pointer hover:border hover:border-green-900 hover:shadow-sm hover:shadow-green-500 rounded-xl text-center"
@@ -155,9 +155,9 @@ const Home = () => {
         </div>
 
         {/* Bio Section */}
-        <div className="bg-gray-950 mt-12 text-center w-full px-4 py-4 rounded-lg xl:w-1/2 m-auto shadow-blue-900 shadow">
+        <div className="bg-gray-950 bg-home mt-12 text-center w-full px-4 py-4 rounded-lg xl:w-1/2 m-auto shadow-blue-900 shadow">
           <h2 className="text-2xl font-bold">Bio</h2>
-          <p className="py-4 mt-2 text-gray-400">
+          <p className="py-2 mt-2 bg-gray-50 bg-opacity-20 rounded-lg text-white">
             {user.bio || "No Bio right now. Edit your bio in Settings."}
           </p>
         </div>
